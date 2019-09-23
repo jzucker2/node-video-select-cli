@@ -1,0 +1,23 @@
+{
+  "name": "video-select-cli",
+  "version": "0.1.0",
+  "description": "Manipulate video select",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jzucker2/node-video-select-cli.git"
+  },
+  "author": "Jordan Zucker",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jzucker2/node-video-select-cli/issues"
+  },
+  "homepage": "https://github.com/jzucker2/node-video-select-cli#readme",
+  "dependencies": {
+    "commander": "^3.0.1",
+    "denon-client": "git://github.com/jzucker2/node-denon-client.git#frankenstein"
+  }
+}
