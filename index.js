@@ -18,7 +18,6 @@ program
 
 program.parse(process.argv);
 
-console.log(program.opts());
 
 console.log(`ip: ${program.ip}`);
 console.log(`cancel-video-select-mode: ${program.cancelVideoSelectMode}`);
@@ -31,24 +30,32 @@ console.log(`video-select-mode: ${program.videoSelectMode}`);
  */
 const denonClient = new Denon.DenonClient(program.ip);
 
+let currentVideoSelectMode = 'test';
+
 // Connecting
 denonClient
   .connect()
   .then(() => {
-    if (program.getVideoSelectMode) {
-      console.log('Retrieving video select mode setting.')
-      return denonClient.getVideoSelectMode();
-    } else if (program.videoSelectMode) {
-      console.log(`Setting videoSelectMode to ${program.videoSelectMode}`);
-      return denonClient.setVideoSelectMode(program.videoSelectMode);
-    } else if (program.cancelVideoSelectMode) {
+    if (program.cancelVideoSelectMode) {
       console.log('Canceling video select');
       throw new Error('Not yet support cancel video select mode.');
       // return denonClient.cancelVideoSelectMode();
     }
+    console.log('Retrieving video select mode setting.')
+    return denonClient.getVideoSelectMode();
   })
   .then((result) => {
     console.log(`getVideoSelectMode ==> ${result}`);
+    currentVideoSelectMode = result;
+    if (program.videoSelectMode === currentVideoSelectMode) {
+      console.log('We already have desired video select mode, exiting.');
+      return denonClient.disconnect();
+    }
+    console.log(`setting video select mode to ${program.videoSelectMode}`);
+    return denonClient.setVideoSelectMode(program.videoSelectMode)
+  })
+  .then((result) => {
+    console.log(`result ==> ${result}`);
     return denonClient.disconnect();
   })
   .catch((error) => {
