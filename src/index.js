@@ -4,7 +4,7 @@ const commander = require('commander');
 const Denon = require('denon-client');
 
 const DENON_IP = '10.0.1.101'
-const VERSION = '0.1.0'
+const VERSION = '0.2.0'
 
 const program = new commander.Command();
 program.version(VERSION);
