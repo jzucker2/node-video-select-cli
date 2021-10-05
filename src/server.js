@@ -1,17 +1,20 @@
 'use strict';
 
 const express = require('express');
+const bodyParser = require('body-parser');
 const Denon = require('denon-client');
 
 // Constants
 const PORT = 3131;
 const HOST = '0.0.0.0';
 
-const DENON_IP = '10.0.1.101'
+const DENON_IP = '10.0.1.101';
 
 // App
 const app = express();
-app.use(express.json())
+// https://stackoverflow.com/questions/10005939/how-do-i-consume-the-json-post-data-in-an-express-application
+// parse application/json
+app.use(bodyParser.json());
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
