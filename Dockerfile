@@ -1,5 +1,8 @@
 FROM node:14-alpine
 
+# from https://github.com/nodejs/docker-node/pull/367
+RUN apk --no-cache add git
+
 WORKDIR /app
 
 # add `/app/node_modules/.bin` to $PATH
