@@ -12,7 +12,7 @@ npm start
 curl -X POST localhost:3131/video-select/denon/10.0.1.101 -H 'Content-Type: application/json' -d '{"mode":"DVD"}'
 {"video-select-mode":"DVD"}
 
-curl localhost:3131/video-select/denon/10.0.1.101
+curl http://localhost:5454/playactor/ps5/10.0.0.1
 {"video-select-mode":"CBL/SAT"}
 ```
 
@@ -29,7 +29,7 @@ docker run -p 3131:3131 node-ps5-actor
 docker run -it --rm \
 -v ${PWD}:/app \
 -v /app/node_modules \
--p 3000:3000 \
+-p 5454:5454 \
 -e CHOKIDAR_USEPOLLING=true \
 node-ps5-actor:latest 
 ```

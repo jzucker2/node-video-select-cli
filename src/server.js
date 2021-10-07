@@ -2,13 +2,15 @@
 
 const express = require('express');
 const bodyParser = require('body-parser');
-// const Denon = require('denon-client');
+const spawn = require('await-spawn');
+// actual framework is broken as a module :(
+// const playactor = require('playactor');
 
 // Constants
 const PORT = 5454;
 const HOST = '0.0.0.0';
 
-const PS5_IP = '10.0.1.101';
+const DEFAULT_PS5_IP = '10.0.1.15';
 
 // App
 const app = express();
@@ -19,125 +21,102 @@ app.get('/', (req, res) => {
     res.send('Hello World');
 });
 
-// cancel
-app.delete('/video-select/denon/:denon_ip', (req, res) => {
-    const { denon_ip } = req.params;
-    console.log(`starting with ip: ${denon_ip}`);
-    // const denonClient = new Denon.DenonClient(denon_ip);
+const parseOutput = (commandLineOutput) => {
+    return JSON.parse(commandLineOutput.stdout.toString());
+}
 
-    // // Connecting
-    // denonClient
-    //     .connect()
-    //     .then(() => {
-    //         console.log('Canceling video select');
-    //         throw new Error('Not yet support cancel video select mode.');
-    //         // return denonClient.cancelVideoSelectMode();
-    //     })
-    //     .then((result) => {
-    //         console.log(`result ==> ${result}`);
-    //         return denonClient.disconnect();
-    //     })
-    //     .then((result) => {
-    //         console.log(`result ==> ${result}`);
-    //         return denonClient.disconnect();
-    //     })
-    //     .catch((error) => {
-    //         // Oh noez.
-    //         console.error(error);
-    //         return denonClient.disconnect();
-    //     })
-    //     .catch((error) => {
-    //     // Oh noez.
-    //     console.error(`trying to return: ${error}`);
-    //     return res.status(404).end();
-    // });
-});
+const formatDeviceStatusResponse = (commandLineOutput) => {
+    const parsedJSON = parseOutput(commandLineOutput);
+    const { type, status, name, id } = parsedJSON;
+    return {
+        'device': type,
+        'name': name,
+        'status': status,
+        'id': id
+    };
+}
+
+const STANDBY_STATUS = 'STANDBY';
+
+function PlayactorException(spawnException) {
+    this.spawnException = spawnException;
+    this.toString = function() {
+        return `${this.spawnException.code} => ${this.spawnException.stderr}`;
+    };
+    this.code = this.spawnException.code;
+}
+
+// https://www.npmjs.com/package/await-spawn
+const executePlayactorScript = async (playactor_args) => {
+    // https://www.npmjs.com/package/await-spawn
+    try {
+        // playactor browse --timeout 10000
+        const playactorOutput = await spawn('playactor', playactor_args);
+        return formatDeviceStatusResponse(playactorOutput);
+    } catch (e) {
+        // console.error(`stdout: ${e.stdout.toString()}`);
+        // console.error(`stderr: ${e.stderr.toString()}`);
+        console.error(`code: ${e.code}`);
+        if (e.code === 1) {
+            return formatDeviceStatusResponse(e)
+        }
+        throw new PlayactorException(e);
+    }
+}
 
 // get
-app.get('/video-select/denon/:denon_ip', (req, res) => {
-    const { denon_ip } = req.params;
-    console.log(`starting with ip: ${denon_ip}`);
-    // const denonClient = new Denon.DenonClient(denon_ip);
-    //
-    // let currentVideoSelectMode = 'test';
-    //
-    // // Connecting
-    // denonClient
-    //     .connect()
-    //     .then(() => {
-    //         console.log(`get initial video select mode`);
-    //         return denonClient.getVideoSelectMode();
-    //     })
-    //     .then((result) => {
-    //         console.log(`getVideoSelectMode result ==> ${result}`);
-    //         currentVideoSelectMode = result;
-    //         return denonClient.disconnect();
-    //     })
-    //     .then((result) => {
-    //         console.log(`result ==> ${result}`);
-    //
-    //         return res.json({'video-select-mode': currentVideoSelectMode});
-    //     })
-    //     .catch((error) => {
-    //         // Oh noez.
-    //         console.error(error);
-    //         return denonClient.disconnect();
-    //     })
-    //     .catch((error) => {
-    //         // Oh noez.
-    //         console.error(`trying to return: ${error}`);
-    //         return res.status(404).end();
-    //     });
+app.get('/playactor/ps5/:ps5_ip', async(req, res) => {
+    // cool tutorial
+    // https://zellwk.com/blog/async-await-express/
+    const { ps5_ip } = req.params;
+    console.log(`starting with ip: ${ps5_ip}`);
+
+    const playactor_args = ['check', '--ip', ps5_ip, '--timeout', '5000'];
+    console.log(`playactor_args: ${playactor_args}`);
+    try {
+        const results = await executePlayactorScript(playactor_args);
+        console.log(`got results ===> ${results}`);
+        return res.json(results);
+    } catch (e) {
+        console.error(`returning error!`);
+        return res.status(404).end();
+    }
 });
 
-// set
-app.post('/video-select/denon/:denon_ip', (req, res) => {
-    const { denon_ip } = req.params;
-    console.log(`body: ${req.body}`);
-    const { mode } = req.body;
-    console.log(`starting with ip: ${denon_ip}`);
-    // const denonClient = new Denon.DenonClient(denon_ip);
-    //
-    // console.log(`desired mode ==> ${mode}`);
-    //
-    // let currentVideoSelectMode = 'test';
-    //
-    // // Connecting
-    // denonClient
-    //     .connect()
-    //     .then(() => {
-    //         console.log(`get initial video select mode`);
-    //         return denonClient.getVideoSelectMode();
-    //     })
-    //     .then((result) => {
-    //         console.log(`getVideoSelectMode result ==> ${result}`);
-    //         currentVideoSelectMode = result;
-    //         if (mode === currentVideoSelectMode) {
-    //             console.log('We already have desired video select mode, exiting.');
-    //             return denonClient.disconnect();
-    //         }
-    //         console.log(`now actually setting video select mode to ${mode}`);
-    //         return denonClient.setVideoSelectMode(mode);
-    //     })
-    //     .then((result) => {
-    //         console.log(`final result ==> ${result}`);
-    //         return denonClient.disconnect();
-    //     })
-    //     .then((result) => {
-    //         console.log(`result ==> ${result}`);
-    //
-    //         return res.json({'video-select-mode': currentVideoSelectMode});
-    //     })
-    //     .catch((error) => {
-    //         // Oh noez.
-    //         console.error(error);
-    //         return denonClient.disconnect();
-    //     })
-    //     .catch((error) => {
-    //         // Oh noez.
-    //         console.error(`trying to return: ${error}`);
-    //         return res.status(404).end();
-    //     });
+app.get('/playactor/ps5/:ps5_ip/wake', async(req, res) => {
+    // cool tutorial
+    // https://zellwk.com/blog/async-await-express/
+    const { ps5_ip } = req.params;
+    console.log(`starting with ip: ${ps5_ip}`);
+
+    const playactor_args = ['wake', '--ip', ps5_ip, '--timeout', '5000'];
+    console.log(`playactor_args: ${playactor_args}`);
+    try {
+        const results = await executePlayactorScript(playactor_args);
+        console.log(`got results ===> ${results}`);
+        return res.json(results);
+    } catch (e) {
+        console.error(`returning error!`);
+        return res.status(404).end();
+    }
+});
+
+app.get('/playactor/ps5/:ps5_ip/standby', async(req, res) => {
+    // cool tutorial
+    // https://zellwk.com/blog/async-await-express/
+    const { ps5_ip } = req.params;
+    console.log(`starting with ip: ${ps5_ip}`);
+
+    const playactor_args = ['standby', '--ip', ps5_ip, '--timeout', '5000'];
+    console.log(`playactor_args: ${playactor_args}`);
+    try {
+        const results = await executePlayactorScript(playactor_args);
+        console.log(`got results ===> ${results}`);
+        return res.json(results);
+    } catch (e) {
+        console.error(`returning error!`);
+        return res.status(404).end();
+    }
 });
 
 app.listen(PORT, HOST);
