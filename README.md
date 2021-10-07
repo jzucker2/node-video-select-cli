@@ -9,11 +9,12 @@ Sparse info but something here: https://github.com/dhleong/playactor/discussions
 ```
 npm start
 
-curl -X POST localhost:3131/video-select/denon/10.0.1.101 -H 'Content-Type: application/json' -d '{"mode":"DVD"}'
-{"video-select-mode":"DVD"}
+curl http://localhost:5454/playactor/ps5/10.0.0.15
+{"device":"PS5","name":"PS5-241","status":"STANDBY","id":"00E421205925"}
 
-curl http://localhost:5454/playactor/ps5/10.0.0.1
-{"video-select-mode":"CBL/SAT"}
+curl http://localhost:5454/playactor/ps5/10.0.1.15/wake
+
+curl http://localhost:5454/playactor/ps5/10.0.1.15/standby
 ```
 
 ## Docker instructions
