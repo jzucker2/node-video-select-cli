@@ -23,6 +23,6 @@ RUN yarn install --network-timeout 100000
 
 COPY . ./
 
-EXPOSE 3131
+EXPOSE 5454
 
 CMD ["npm", "start"]

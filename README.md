@@ -1,4 +1,8 @@
-# node-video-select-cli
+# node-ps5-actor
+
+## Integration Guide
+
+Sparse info but something here: https://github.com/dhleong/playactor/discussions/22
 
 ## Basic Testing
 
@@ -19,15 +23,15 @@ https://www.bogotobogo.com/DevOps/Docker/Docker-React-App.php
 
 
 ```
-docker build -t node-video-select:latest .
-docker run -p 3131:3131 node-video-select
+docker build -t node-ps5-actor:latest .
+docker run -p 3131:3131 node-ps5-actor
 
 docker run -it --rm \
 -v ${PWD}:/app \
 -v /app/node_modules \
 -p 3000:3000 \
 -e CHOKIDAR_USEPOLLING=true \
-node-video-select:latest 
+node-ps5-actor:latest 
 ```
 
 Docker compose
@@ -36,7 +40,7 @@ Docker compose
 # don't always need --build
 docker-compose up -d --build
 docker-compose ps
-docker-compose logs node-video-select
-docker-compose exec -it node-video-select /bin/sh
+docker-compose logs node-ps5-actor
+docker-compose exec -it node-ps5-actor /bin/sh
 docker-compose stop
 ```
