@@ -3,12 +3,12 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const Denon = require('denon-client');
+const Constants = require('./constants');
 
 // Constants
-const PORT = 3131;
-const HOST = '0.0.0.0';
+const PORT = Constants.PORT;
+const HOST = Constants.HOST;
 
-const DENON_IP = '10.0.1.101';
 
 // App
 const app = express();
