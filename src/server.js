@@ -1,9 +1,9 @@
 'use strict';
 
-import Constants from './constants';
 const express = require('express');
 const bodyParser = require('body-parser');
 const Denon = require('denon-client');
+const Constants = require('./constants');
 
 // Constants
 const PORT = Constants.PORT;
