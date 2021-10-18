@@ -23,6 +23,7 @@ RUN yarn install --network-timeout 100000
 
 COPY . ./
 
+# this needs to match the env var in the app
 EXPOSE 3131
 
 CMD ["npm", "start"]
