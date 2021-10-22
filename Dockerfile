@@ -8,9 +8,9 @@ WORKDIR /app
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
-COPY package.json ./
+COPY package.json package.json
 
-COPY yarn.lock ./
+COPY yarn.lock yarn.lock
 
 # issue with `--frozen-lockfile` is the different arch/platforms
 # means different lockfiles for each
@@ -21,7 +21,7 @@ COPY yarn.lock ./
 # for github actions timeouts?
 RUN yarn install --network-timeout 100000
 
-COPY . ./
+COPY src/ src/
 
 # this needs to match the env var in the app
 EXPOSE 3131
