@@ -1,8 +1,9 @@
 # https://github.com/nodejs/docker-node/issues/1589
-FROM node:14.18.1-alpine3.12
+FROM node:14.18.1-alpine3.12 AS debian_base
 
 # from https://github.com/nodejs/docker-node/pull/367
 RUN apk --no-cache add git
+FROM debian_base AS node_dependencies
 
 WORKDIR /app
 
@@ -22,9 +23,12 @@ COPY yarn.lock yarn.lock
 # for github actions timeouts?
 RUN yarn install --network-timeout 100000
 
+FROM node_dependencies AS source_code
 COPY src/ src/
 
+FROM source_code AS setup_env
 # this needs to match the env var in the app
 EXPOSE 3131
 
+FROM setup_env AS run_server
 CMD ["npm", "start"]
