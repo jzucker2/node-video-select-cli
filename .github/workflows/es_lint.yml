@@ -1,0 +1,35 @@
+# https://github.com/marketplace/actions/run-eslint
+
+name: ESLint
+
+#on: [push, pull_request]
+on:
+#  schedule:
+#    - cron: '23 9 * * *'
+  push:
+    branches: [ master ]
+    # Publish semver tags as releases.
+    tags: [ '*.*.*' ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+    name: Lint
+    steps:
+      -
+        name: Check out source repository
+        uses: actions/checkout@v3
+      -
+        name: Set up Node environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: 14
+          cache: 'npm'
+      -
+        name: Install modules
+        run: yarn
+      -
+        name: Run ESLint
+        run: eslint . --ext .js,.jsx,.ts,.tsx
