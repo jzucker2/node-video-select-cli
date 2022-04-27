@@ -1,0 +1,31 @@
+version: 2
+updates:
+  # Maintain dependencies for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    reviewers:
+      - jzucker2
+    assignees:
+      - jzucker2
+    labels:
+      - github_actions
+  # maintain dependencies for npm project
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "daily"
+    open-pull-requests-limit: 5
+    reviewers:
+      - jzucker2
+    assignees:
+      - jzucker2
+    labels:
+      - dependencies
+    allow:
+      # Allow updates for express and related packages
+      - dependency-name: "express"
+      - dependency-name: "body-parser"
+      # custom for this project
+      - dependency-name: "denon-client"
