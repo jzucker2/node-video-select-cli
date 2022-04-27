@@ -1,4 +1,5 @@
-FROM node:14-alpine
+# https://github.com/nodejs/docker-node/issues/1589
+FROM node:14.18.1-alpine3.12
 
 # from https://github.com/nodejs/docker-node/pull/367
 RUN apk --no-cache add git
