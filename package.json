@@ -20,7 +20,7 @@
   "dependencies": {
     "body-parser": "^1.19.0",
     "commander": "^3.0.1",
-    "denon-client": "git://github.com/jzucker2/node-denon-client.git#frankenstein",
+    "denon-client": "github:jzucker2/node-denon-client.git#frankenstein",
     "express": "^4.17.1"
   },
   "devDependencies": {}

@@ -75,9 +75,9 @@ debug@2.6.9:
   dependencies:
     ms "2.0.0"
 
-"denon-client@git://github.com/jzucker2/node-denon-client.git#frankenstein":
+"denon-client@github:jzucker2/node-denon-client.git#frankenstein":
   version "0.2.4"
-  resolved "git://github.com/jzucker2/node-denon-client.git#7e6e136cd2e12046b76197675f2c75cd97b6c58a"
+  resolved "https://codeload.github.com/jzucker2/node-denon-client/tar.gz/7e6e136cd2e12046b76197675f2c75cd97b6c58a"
   dependencies:
     bluebird "^3.3.4"
     lodash "^4.9.0"
