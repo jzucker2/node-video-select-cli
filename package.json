@@ -1,6 +1,6 @@
 {
   "name": "video-select-cli",
-  "version": "0.5.3",
+  "version": "0.6.0",
   "description": "Manipulate video select",
   "main": "server.js",
   "scripts": {
@@ -23,5 +23,11 @@
     "denon-client": "github:jzucker2/node-denon-client.git#frankenstein",
     "express": "^4.17.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "eslint": "^8.0.1",
+    "eslint-config-standard": "^17.0.0",
+    "eslint-plugin-import": "^2.25.2",
+    "eslint-plugin-n": "^15.0.0",
+    "eslint-plugin-promise": "^6.0.0"
+  }
 }
