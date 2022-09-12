@@ -29,3 +29,4 @@ updates:
       - dependency-name: "body-parser"
       # custom for this project
       - dependency-name: "denon-client"
+      - dependency-name: "commander"
