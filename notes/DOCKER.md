@@ -1,8 +1,11 @@
-## Docker instructions
+# Docker
+
+Landing page for info about the docker container of this project.
+
+## Instructions
 
 Mostly based off:
 https://www.bogotobogo.com/DevOps/Docker/Docker-React-App.php
-
 
 ```
 docker build -t node-video-select:latest .
