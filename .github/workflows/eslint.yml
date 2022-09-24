@@ -35,7 +35,7 @@ jobs:
         name: Set up Node environment
         uses: actions/setup-node@v3
         with:
-          node-version: 14
+          node-version: 16
           cache: 'npm'
       -
         name: Install modules (including devDependencies)
