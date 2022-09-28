@@ -30,3 +30,6 @@ updates:
       # custom for this project
       - dependency-name: "denon-client"
       - dependency-name: "commander"
+      # monitoring
+      - dependency-name: "express-prom-bundle"
+      - dependency-name: "prom-client"
