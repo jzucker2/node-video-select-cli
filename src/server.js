@@ -1,9 +1,11 @@
 'use strict';
 
 const express = require('express');
+const promBundle = require("express-prom-bundle");
 const bodyParser = require('body-parser');
 const Denon = require('denon-client');
 const Constants = require('./constants');
+const metricsMiddleware = promBundle({includeMethod: true});
 
 // Constants
 const PORT = Constants.PORT;
@@ -12,9 +14,15 @@ const HOST = Constants.HOST;
 
 // App
 const app = express();
+
+// add monitoring
+app.use(metricsMiddleware);
+
 // https://stackoverflow.com/questions/10005939/how-do-i-consume-the-json-post-data-in-an-express-application
 // parse application/json
 app.use(bodyParser.json());
+
+// simple route
 app.get('/', (req, res) => {
     res.send('Hello World');
 });
