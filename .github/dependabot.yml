@@ -11,6 +11,21 @@ updates:
       - jzucker2
     labels:
       - github_actions
+
+  # Enable version updates for Docker
+  - package-ecosystem: "docker"
+    # Look for a `Dockerfile` in the `root` directory
+    directory: "/"
+    # Check for updates once a week
+    schedule:
+      interval: "daily"
+    reviewers:
+      - jzucker2
+    assignees:
+      - jzucker2
+    labels:
+      - github_actions
+
   # maintain dependencies for npm project
   - package-ecosystem: "npm"
     directory: "/"
@@ -24,12 +39,6 @@ updates:
     labels:
       - dependencies
     allow:
-      # Allow updates for express and related packages
-      - dependency-name: "express"
-      - dependency-name: "body-parser"
       # custom for this project
       - dependency-name: "denon-client"
       - dependency-name: "commander"
-      # monitoring
-      - dependency-name: "express-prom-bundle"
-      - dependency-name: "prom-client"

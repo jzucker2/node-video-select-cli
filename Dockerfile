@@ -1,7 +1,6 @@
-# https://github.com/nodejs/docker-node/issues/1589
-FROM node:16 AS debian_base
+ARG TAPEDECK_VERSION=pr-1
+FROM ghcr.io/jzucker2/tapedeck:${TAPEDECK_VERSION} AS debian_base
 
-# from https://github.com/nodejs/docker-node/pull/367
 FROM debian_base AS node_dependencies
 
 WORKDIR /app
