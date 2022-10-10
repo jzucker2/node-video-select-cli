@@ -1,4 +1,4 @@
-ARG TAPEDECK_VERSION=0.1.0
+ARG TAPEDECK_VERSION=p-3
 FROM ghcr.io/jzucker2/tapedeck:${TAPEDECK_VERSION} AS debian_base
 
 FROM debian_base AS node_dependencies
