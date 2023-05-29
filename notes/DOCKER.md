@@ -29,3 +29,7 @@ docker-compose logs node-video-select
 docker-compose exec -it node-video-select /bin/sh
 docker-compose stop
 ```
+
+## Minimal Image
+
+* https://developer.redis.com/create/docker/nodejs-nginx-redis/
