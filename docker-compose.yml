@@ -7,9 +7,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    volumes:
-      - '.:/app'
-      - '/app/node_modules'
+    restart: always
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     ports:
       - 3131:3131
     environment:
