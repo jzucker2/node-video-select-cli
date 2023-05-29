@@ -26,7 +26,7 @@ Docker compose
 docker-compose up -d --build
 docker-compose ps
 docker-compose logs node-video-select
-docker-compose exec -it node-video-select /bin/sh
+docker-compose exec -it node-video-select bin/bash
 docker-compose stop
 ```
 
