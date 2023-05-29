@@ -1,6 +1,6 @@
 {
   "name": "video-select-cli",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "Manipulate video select using my messy, Frankensteined library",
   "main": "server.js",
   "scripts": {
