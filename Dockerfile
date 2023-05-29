@@ -29,7 +29,7 @@ RUN yarn install --network-timeout 100000
 FROM node_dependencies AS source_code
 COPY src/ src/
 
-FROM source_code as setup_env
+FROM source_code AS setup_env
 
 # this needs to match the env var in the app
 EXPOSE 3131
