@@ -1,5 +1,7 @@
 # node-video-select-cli
 
+I should just move this into the python project ...
+
 ## Basic Testing
 
 ```

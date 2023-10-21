@@ -22,7 +22,7 @@ jobs:
     steps:
       -
         name: Check out source repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
       # https://github.com/actions/setup-node/issues/317#issuecomment-1059337324
       # silly bug with the cache
       # Workaround to avoid "Post Run actions/setup-node" failures.
